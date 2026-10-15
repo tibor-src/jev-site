@@ -13,7 +13,7 @@ class RecordedAnswer
     public static function vary(string $type, array $response): array
     {
         return match ($type) {
-            'boolean' => ['probability' => self::varyBoolean((float) $response['probability'])],
+            'boolean', 'image' => ['probability' => self::varyBoolean((float) $response['probability'])],
             'choice' => self::varyChoice($response),
             'score' => self::varyScore($response),
             default => $response,

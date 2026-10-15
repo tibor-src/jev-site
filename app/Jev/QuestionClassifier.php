@@ -58,4 +58,35 @@ class QuestionClassifier
             return new ExampleRun(null, 'Jev did not return an answer for '.$type.'.');
         }
     }
+
+    /**
+     * @return ExampleRun The data is the yes/no probability for the stored picture.
+     */
+    public function classifyImage(): ExampleRun
+    {
+        if (! $this->keyIsConfigured()) {
+            return new ExampleRun(null, self::MissingKeyMessage);
+        }
+
+        $encoded = base64_encode((string) file_get_contents(public_path('demo/circle.jpg')));
+
+        $response = Classification::of([
+            'Photo:',
+            [
+                'type' => 'image_url',
+                'image_url' => ['url' => 'data:image/jpeg;base64,'.$encoded],
+            ],
+        ])
+            ->question('image', JevExamples::question('image'))
+            ->withHeaders([JevExamples::ImageHeader => 'true'])
+            ->classify('openrouter', JevExamples::ImageModel);
+
+        $answer = $response->answer('image');
+
+        if (! $answer instanceof BooleanAnswer) {
+            return new ExampleRun(null, self::UnexpectedAnswerMessage);
+        }
+
+        return new ExampleRun($answer->toArray(), null);
+    }
 }

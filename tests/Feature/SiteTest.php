@@ -17,7 +17,7 @@ class SiteTest extends TestCase
                 'jev.create',
                 'https://jev.tibor.io/',
                 'Jev - A Decision Model',
-                'Jev is a decision model from TypeSafe. Classify a message as a boolean, choice, or score, and read the probability.',
+                'Jev is a decision model from TypeSafe. Classify a message as a boolean, choice, or score, or judge a picture, and read the probability.',
                 'WebPage',
                 'website',
                 'Classify a message',
@@ -211,7 +211,7 @@ class SiteTest extends TestCase
     {
         $this->get(route('jev.create'))
             ->assertOk()
-            ->assertSee('"featureList":["Boolean","Choice","Score"]', false)
+            ->assertSee('"featureList":["Boolean","Choice","Score","Image"]', false)
             ->assertSee('Lang:', false);
     }
 

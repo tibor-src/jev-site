@@ -38,7 +38,9 @@ class AskJevController extends Controller
             ]);
         }
 
-        $result = $classifier->classifyExample($type, $scenario['text']);
+        $result = $type === 'image'
+            ? $classifier->classifyImage()
+            : $classifier->classifyExample($type, $scenario['text']);
 
         if ($result->error !== null) {
             return response()->json(['message' => $result->error], 422);

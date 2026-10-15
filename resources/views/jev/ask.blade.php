@@ -24,7 +24,7 @@
             <div class="flex flex-col gap-2">
                 <h2 class="text-xl font-medium tracking-tight">Classify a message</h2>
                 <p class="text-[#706f6c] dark:text-[#A1A09A]">
-                    Boolean, choice, and score. Pick a message, run the question, and read the answer.
+                    Boolean, choice, score, and a picture. Pick a message or look at the picture, run the question, and read the answer.
                 </p>
             </div>
         </div>
@@ -37,12 +37,14 @@
                         <p class="text-sm text-[#706f6c] dark:text-[#A1A09A]">{{ $question['summary'] }}</p>
                     </div>
                     <div class="flex shrink-0 items-center gap-2">
-                        <label class="sr-only" for="{{ $type }}-text">Message for {{ $question['title'] }}</label>
-                        <select id="{{ $type }}-text" class="w-56 max-w-full rounded-md border border-[#e3e3e0] bg-white px-2 py-1.5 text-sm dark:border-[#3E3E3A] dark:bg-[#0a0a0a]">
-                            @foreach ($question['scenarios'] as $index => $scenario)
-                                <option value="{{ $index }}" title="{{ $scenario['text'] }}">{{ $scenario['text'] }}</option>
-                            @endforeach
-                        </select>
+                        @unless ($type === 'image')
+                            <label class="sr-only" for="{{ $type }}-text">Message for {{ $question['title'] }}</label>
+                            <select id="{{ $type }}-text" class="w-56 max-w-full rounded-md border border-[#e3e3e0] bg-white px-2 py-1.5 text-sm dark:border-[#3E3E3A] dark:bg-[#0a0a0a]">
+                                @foreach ($question['scenarios'] as $index => $scenario)
+                                    <option value="{{ $index }}" title="{{ $scenario['text'] }}">{{ $scenario['text'] }}</option>
+                                @endforeach
+                            </select>
+                        @endunless
                         <button type="button" class="shrink-0 rounded-md bg-[#f53003] px-3 py-1.5 text-sm font-medium text-white disabled:opacity-60 dark:bg-[#FF4433]">
                             Run
                         </button>
@@ -52,11 +54,21 @@
                 <div class="flex flex-col gap-1">
                     <p class="text-xs font-medium tracking-wider text-[#706f6c] uppercase dark:text-[#A1A09A]">Question</p>
                     <p class="text-sm font-medium">{{ $question['question']['instructions'] }}</p>
-                    <p class="text-sm">
-                        <span class="font-medium">Input:</span>
-                        <code data-input class="rounded bg-[#FDFDFC] px-1.5 py-0.5 font-mono text-[13px] text-[#1b1b18] dark:bg-[#0a0a0a] dark:text-[#EDEDEC]">{{ $question['scenarios'][0]['text'] }}</code>
-                    </p>
-                    @if ($type === 'boolean')
+                    @if ($type === 'image')
+                        <img
+                            src="{{ $question['image'] }}"
+                            alt="{{ $question['alt'] }}"
+                            width="400"
+                            height="400"
+                            class="mt-2 w-48 rounded-md border border-[#e3e3e0] dark:border-[#3E3E3A]"
+                        >
+                    @else
+                        <p class="text-sm">
+                            <span class="font-medium">Input:</span>
+                            <code data-input class="rounded bg-[#FDFDFC] px-1.5 py-0.5 font-mono text-[13px] text-[#1b1b18] dark:bg-[#0a0a0a] dark:text-[#EDEDEC]">{{ $question['scenarios'][0]['text'] }}</code>
+                        </p>
+                    @endif
+                    @if ($type === 'boolean' || $type === 'image')
                         <ul class="flex list-disc flex-col gap-1 pl-5 text-sm text-[#706f6c] dark:text-[#A1A09A]">
                             <li>Yes: {{ $question['question']['criteria']['true'] }}</li>
                             <li>No: {{ $question['question']['criteria']['false'] }}</li>

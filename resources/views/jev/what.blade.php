@@ -56,7 +56,7 @@
         <section id="this-site" class="flex flex-col gap-3">
             <h3 class="text-lg font-medium">What this site is</h3>
             <p class="text-sm leading-6 text-[#706f6c] dark:text-[#A1A09A]">
-                The Demo page runs those three questions, one message at a time. The live site has no API key, so Run replays a recorded answer. A checkout with <code class="text-[#1b1b18] dark:text-[#EDEDEC]">OPENROUTER_API_KEY</code> set calls Jev through the Laravel AI SDK. The <a href="{{ route('jev.create') }}" class="text-[#1b1b18] underline dark:text-[#EDEDEC]">Demo</a> page is where an answer shows up. The <a href="{{ route('jev.faqs') }}" class="text-[#1b1b18] underline dark:text-[#EDEDEC]">FAQs</a> cover thresholds, confidence, and the boolean name. The <a href="{{ route('jev.resources') }}" class="text-[#1b1b18] underline dark:text-[#EDEDEC]">resources</a> point at TypeSafe’s own docs.
+                The Demo page runs those three questions on a message, and one question on a picture. The live site has no API key, so Run replays a recorded answer. A checkout with <code class="text-[#1b1b18] dark:text-[#EDEDEC]">OPENROUTER_API_KEY</code> set calls Jev through the Laravel AI SDK. The <a href="{{ route('jev.create') }}" class="text-[#1b1b18] underline dark:text-[#EDEDEC]">Demo</a> page is where an answer shows up. The <a href="{{ route('jev.faqs') }}" class="text-[#1b1b18] underline dark:text-[#EDEDEC]">FAQs</a> cover thresholds, confidence, and the boolean name. The <a href="{{ route('jev.resources') }}" class="text-[#1b1b18] underline dark:text-[#EDEDEC]">resources</a> point at TypeSafe’s own docs.
             </p>
         </section>
     </article>

@@ -48,6 +48,10 @@ class AskJevTest extends TestCase
             ->assertSee('<li>Calm, stating facts</li>', false)
             ->assertSee('<li>Annoyed but polite</li>', false)
             ->assertSee('<li>Angry or threatening to leave</li>', false)
+            ->assertSee('src="/demo/circle.jpg"', false)
+            ->assertSee('alt="A red circle centered on a white square."', false)
+            ->assertSee('Is there a red circle in the photo?')
+            ->assertSee('A picture in the state, behind the images header.')
             ->assertSee('Is the deploy finished?')
             ->assertSee('Can you check whether the deploy finished')
             ->assertDontSee('Can you check whether the deploy finished?', false)
@@ -175,6 +179,46 @@ class AskJevTest extends TestCase
         Classification::assertClassified(
             fn ($prompt) => $prompt->asks('boolean') && $prompt->contains('Is the deploy finished?')
         );
+    }
+
+    public function test_missing_key_replays_the_picture_as_a_yes(): void
+    {
+        config()->set('ai.providers.openrouter.key', null);
+
+        Classification::fake();
+
+        $probability = $this->postJson(route('jev.store', 'image'), ['scenario' => 0])
+            ->assertOk()
+            ->assertJsonPath('demo', true)
+            ->json('data.probability');
+
+        $this->assertGreaterThanOrEqual(0.9, $probability);
+        $this->assertLessThanOrEqual(0.99, $probability);
+        Classification::assertNothingClassified();
+    }
+
+    public function test_live_image_run_sends_the_picture_and_the_images_header(): void
+    {
+        config()->set('ai.providers.openrouter.key', 'test-key');
+
+        Classification::fake([
+            ['image' => new BooleanAnswer(0.97)],
+        ]);
+
+        $this->postJson(route('jev.store', 'image'), ['scenario' => 0])
+            ->assertOk()
+            ->assertJsonPath('demo', false)
+            ->assertJsonPath('data.probability', 0.97);
+
+        Classification::assertClassified(function ($prompt): bool {
+            $image = $prompt->state[1]['image_url']['url'] ?? '';
+
+            return $prompt->model === 'typesafe/jev-1.14'
+                && $prompt->asks('image')
+                && ($prompt->state[1]['type'] ?? null) === 'image_url'
+                && str_starts_with($image, 'data:image/jpeg;base64,')
+                && ($prompt->provider->additionalConfiguration()['headers']['TypeSafe-Danger-Zone-Images'] ?? null) === 'true';
+        });
     }
 
     public function test_unknown_question_is_not_found(): void

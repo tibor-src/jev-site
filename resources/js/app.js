@@ -35,14 +35,16 @@ if (demoNode !== null) {
         const response = section.querySelector('[data-response]');
         const input = section.querySelector('[data-input]');
 
-        const selected = () => question.scenarios[Number(select.value)];
+        const selected = () => question.scenarios[select ? Number(select.value) : 0];
 
         const showRequest = () => {
             request.textContent = requestCode(type, question, selected().text);
         };
 
         const showInput = () => {
-            input.textContent = selected().text;
+            if (input) {
+                input.textContent = selected().text;
+            }
         };
 
         const reset = () => {
@@ -57,7 +59,10 @@ if (demoNode !== null) {
             showRequest();
         };
 
-        select.addEventListener('change', reset);
+        if (select) {
+            select.addEventListener('change', reset);
+        }
+
         button.addEventListener('click', () => run(type, select, button, before, running, after, response));
         refreshRequests.push(showRequest);
         showRequest();
@@ -83,7 +88,7 @@ async function run(type, select, button, before, running, after, response) {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': token,
             },
-            body: JSON.stringify({ scenario: Number(select.value) }),
+            body: JSON.stringify({ scenario: select ? Number(select.value) : 0 }),
         });
         const payload = await result.json();
 
@@ -119,7 +124,7 @@ async function run(type, select, button, before, running, after, response) {
 }
 
 function renderAnswer(type, data) {
-    if (type === 'boolean') {
+    if (type === 'boolean' || type === 'image') {
         const percent = (data.probability * 100).toFixed(1);
         const yes = data.probability > 0.8 ? 'yes' : 'no';
 
@@ -208,7 +213,49 @@ function renderAnswer(type, data) {
 }
 
 function requestCode(type, question, text) {
+    if (type === 'image') {
+        return language === 'js' ? jsImageRequest(question) : phpImageRequest(question);
+    }
+
     return language === 'js' ? jsRequest(type, question, text) : phpRequest(type, question, text);
+}
+
+function phpImageRequest(question) {
+    return `use Laravel\\Ai\\Classification;
+use Laravel\\Ai\\Classification\\Boolean;
+
+$response = Classification::of([
+    'Photo:',
+    ['type' => 'image_url', 'image_url' => ['url' => 'data:image/jpeg;base64,...']],
+])
+    ->question('image', new Boolean(${phpString(question.question.instructions)}, [
+        'true' => ${phpString(question.question.criteria.true)},
+        'false' => ${phpString(question.question.criteria.false)},
+    ]))
+    ->withHeaders(['TypeSafe-Danger-Zone-Images' => 'true'])
+    ->classify('openrouter', 'typesafe/jev-1.14');
+
+$response->answer('image')->isTrue(0.8);`;
+}
+
+function jsImageRequest(question) {
+    return `import { image, noul, TypeSafeClient } from '@typesafe-ai/sdk';
+
+const client = new TypeSafeClient();
+const photo = image(await openAsBlob('circle.jpg'));
+
+const { answers } = await client.systemOne(
+    {
+        model: 'jev-1.14.0',
+        state: { photo },
+        questions: {
+            image: noul(${phpString(question.question.instructions)}),
+        },
+    },
+    { headers: { 'TypeSafe-Danger-Zone-Images': 'true' } },
+);
+
+answers.image.noul > 0.8;`;
 }
 
 function phpRequest(type, question, text) {

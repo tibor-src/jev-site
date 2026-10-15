@@ -13,12 +13,16 @@ class JevExamples
     /**
      * @var list<string>
      */
-    public const array Types = ['boolean', 'choice', 'score'];
+    public const array Types = ['boolean', 'choice', 'score', 'image'];
+
+    public const string ImageModel = 'typesafe/jev-1.14';
+
+    public const string ImageHeader = 'TypeSafe-Danger-Zone-Images';
 
     /**
      * Recorded answers from a local run, plus alternate texts so the dropdown can change the result.
      *
-     * @return array<string, array{title: string, summary: string, scenarios: list<array{text: string, response: array<string, mixed>}>}>
+     * @return array<string, array{title: string, summary: string, image?: string, alt?: string, scenarios: list<array{text: string, response: array<string, mixed>}>}>
      */
     public static function demo(): array
     {
@@ -110,6 +114,18 @@ class JevExamples
                     ],
                 ],
             ],
+            'image' => [
+                'title' => 'Image',
+                'summary' => 'A picture in the state, behind the images header.',
+                'image' => '/demo/circle.jpg',
+                'alt' => 'A red circle centered on a white square.',
+                'scenarios' => [
+                    [
+                        'text' => 'A red circle centered on a white square.',
+                        'response' => ['probability' => 0.96],
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -130,6 +146,10 @@ class JevExamples
                 'Annoyed but polite',
                 'Angry or threatening to leave',
             ]),
+            'image' => new Boolean('Is there a red circle in the photo?', [
+                'true' => 'A red circle is visible.',
+                'false' => 'There is no red circle.',
+            ]),
             default => throw new InvalidArgumentException("Unknown Jev example [{$type}]."),
         };
     }
@@ -147,6 +167,8 @@ class JevExamples
                 'summary' => $example['summary'],
                 'question' => self::question($type)->toArray(),
                 'scenarios' => $example['scenarios'],
+                'image' => $example['image'] ?? null,
+                'alt' => $example['alt'] ?? null,
             ];
         }
 

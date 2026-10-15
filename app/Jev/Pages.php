@@ -31,7 +31,7 @@ class Pages
             'demo' => [
                 'path' => '/',
                 'title' => 'Jev - A Decision Model',
-                'description' => 'Jev is a decision model from TypeSafe. Classify a message as a boolean, choice, or score, and read the probability.',
+                'description' => 'Jev is a decision model from TypeSafe. Classify a message as a boolean, choice, or score, or judge a picture, and read the probability.',
                 'type' => 'WebPage',
                 'og' => 'website',
             ],
@@ -233,7 +233,7 @@ class Pages
                 'operatingSystem' => 'Web',
                 'url' => self::Origin.'/',
                 'description' => $page['description'],
-                'featureList' => ['Boolean', 'Choice', 'Score'],
+                'featureList' => ['Boolean', 'Choice', 'Score', 'Image'],
             ];
         }
 
