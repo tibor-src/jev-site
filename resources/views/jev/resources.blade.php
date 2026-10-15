@@ -22,16 +22,20 @@
                     <p class="text-[#706f6c] dark:text-[#A1A09A]">Diogo Almeida’s launch post, <time datetime="2026-09-15">15 September 2026</time>. The names, the training claim (RLCD), the speed and price figures, and the comparison with chat models.</p>
                 </li>
                 <li>
+                    <a href="https://typesafe.ai/blog/jev-1-14" class="font-medium text-[#1b1b18] underline dark:text-[#EDEDEC]">Jev 1.14</a>
+                    <p class="text-[#706f6c] dark:text-[#A1A09A]"><time datetime="2026-10-14">14 October 2026</time>. Jev 1.14.0, under the alias <code class="text-[#1b1b18] dark:text-[#EDEDEC]">jev-preview</code>. Images, a Box type, and a longer context, each behind a danger-zone header. The price is unchanged.</p>
+                </li>
+                <li>
                     <a href="https://docs.typesafe.ai/introduction" class="font-medium text-[#1b1b18] underline dark:text-[#EDEDEC]">Introduction</a>
                     <p class="text-[#706f6c] dark:text-[#A1A09A]">The short version: state and typed questions in, structured answers out.</p>
                 </li>
                 <li>
                     <a href="https://docs.typesafe.ai/concepts/system-one" class="font-medium text-[#1b1b18] underline dark:text-[#EDEDEC]">System One</a>
-                    <p class="text-[#706f6c] dark:text-[#A1A09A]">What the model class is for, and how it differs from a language model. Text in. No images yet.</p>
+                    <p class="text-[#706f6c] dark:text-[#A1A09A]">What the model class is for, and how it differs from a language model.</p>
                 </li>
                 <li>
                     <a href="https://docs.typesafe.ai/primitives" class="font-medium text-[#1b1b18] underline dark:text-[#EDEDEC]">Primitives</a>
-                    <p class="text-[#706f6c] dark:text-[#A1A09A]">How to choose Noul, Choice, or Score, and how to ask several at once. The pages for <a href="https://docs.typesafe.ai/primitives/noul" class="text-[#1b1b18] underline dark:text-[#EDEDEC]">Noul</a>, <a href="https://docs.typesafe.ai/primitives/choice" class="text-[#1b1b18] underline dark:text-[#EDEDEC]">Choice</a>, and <a href="https://docs.typesafe.ai/primitives/score" class="text-[#1b1b18] underline dark:text-[#EDEDEC]">Score</a> have the response fields.</p>
+                    <p class="text-[#706f6c] dark:text-[#A1A09A]">How to choose Noul, Choice, Score, or Box, and how to ask several at once. The pages for <a href="https://docs.typesafe.ai/primitives/noul" class="text-[#1b1b18] underline dark:text-[#EDEDEC]">Noul</a>, <a href="https://docs.typesafe.ai/primitives/choice" class="text-[#1b1b18] underline dark:text-[#EDEDEC]">Choice</a>, <a href="https://docs.typesafe.ai/primitives/score" class="text-[#1b1b18] underline dark:text-[#EDEDEC]">Score</a>, and <a href="https://docs.typesafe.ai/primitives/box" class="text-[#1b1b18] underline dark:text-[#EDEDEC]">Box</a> have the response fields.</p>
                 </li>
                 <li>
                     <a href="https://docs.typesafe.ai/confidence" class="font-medium text-[#1b1b18] underline dark:text-[#EDEDEC]">Confidence</a>
@@ -42,12 +46,20 @@
                     <p class="text-[#706f6c] dark:text-[#A1A09A]">What to send as context, and how a question points at a nested field.</p>
                 </li>
                 <li>
+                    <a href="https://docs.typesafe.ai/images" class="font-medium text-[#1b1b18] underline dark:text-[#EDEDEC]">Images</a>
+                    <p class="text-[#706f6c] dark:text-[#A1A09A]">An image is listed in <code class="text-[#1b1b18] dark:text-[#EDEDEC]">assets</code>, and a reference to it can sit in the state, in the instructions, or in the criteria. Send <code class="text-[#1b1b18] dark:text-[#EDEDEC]">TypeSafe-Danger-Zone-Images: true</code>. Jev 1.13 and Jev 1.14 both accept images. A Box question needs 1.14 and the same header.</p>
+                </li>
+                <li>
                     <a href="https://docs.typesafe.ai/concepts/how-to-build-with-system-one" class="font-medium text-[#1b1b18] underline dark:text-[#EDEDEC]">How to build with System One</a>
                     <p class="text-[#706f6c] dark:text-[#A1A09A]">Keep the workflow in code. Give the model narrow judgments.</p>
                 </li>
                 <li>
                     <a href="https://docs.typesafe.ai/model-jaggedness/jev-1.13" class="font-medium text-[#1b1b18] underline dark:text-[#EDEDEC]">Jev 1.13 jaggedness</a>
-                    <p class="text-[#706f6c] dark:text-[#A1A09A]">TypeSafe’s own list of rough edges on the current model. Worth reading before you trust a new question shape.</p>
+                    <p class="text-[#706f6c] dark:text-[#A1A09A]">TypeSafe’s own list of rough edges on Jev 1.13. Worth reading before you trust a new question shape. Jev 1.14 is the newer release. This page is still about 1.13.</p>
+                </li>
+                <li>
+                    <a href="https://docs.typesafe.ai/models" class="font-medium text-[#1b1b18] underline dark:text-[#EDEDEC]">Models</a>
+                    <p class="text-[#706f6c] dark:text-[#A1A09A]"><code class="text-[#1b1b18] dark:text-[#EDEDEC]">jev-1.14.0</code> is the <time datetime="2026-10-14">14 October 2026</time> release. The alias <code class="text-[#1b1b18] dark:text-[#EDEDEC]">jev-preview</code> points at it. <code class="text-[#1b1b18] dark:text-[#EDEDEC]">jev-latest</code> still points at <code class="text-[#1b1b18] dark:text-[#EDEDEC]">jev-1.13.0</code>. Input is $42 per Btok, which is $0.042 per Mtok. Output tokens are free. The default context is 64k tokens per request and 32k per question. The header <code class="text-[#1b1b18] dark:text-[#EDEDEC]">TypeSafe-Danger-Zone-Long-Context: true</code> raises both to 262k on 1.13 and 1.14. TypeSafe says that path is slower and less accurate.</p>
                 </li>
             </ul>
         </section>
@@ -82,7 +94,7 @@
                 </li>
                 <li>
                     <a href="https://docs.typesafe.ai/api" class="font-medium text-[#1b1b18] underline dark:text-[#EDEDEC]">HTTP API</a>
-                    <p class="text-[#706f6c] dark:text-[#A1A09A]"><code class="text-[#1b1b18] dark:text-[#EDEDEC]">POST /v1/systemone</code>. The <code class="text-[#1b1b18] dark:text-[#EDEDEC]">model</code> field selects Jev. The docs’ examples use <code class="text-[#1b1b18] dark:text-[#EDEDEC]">jev-latest</code>.</p>
+                    <p class="text-[#706f6c] dark:text-[#A1A09A]"><code class="text-[#1b1b18] dark:text-[#EDEDEC]">POST /v1/systemone</code>. The <code class="text-[#1b1b18] dark:text-[#EDEDEC]">model</code> field selects Jev. The docs’ examples use <code class="text-[#1b1b18] dark:text-[#EDEDEC]">jev-latest</code>, which still names <code class="text-[#1b1b18] dark:text-[#EDEDEC]">jev-1.13.0</code>. Box examples use <code class="text-[#1b1b18] dark:text-[#EDEDEC]">jev-preview</code> or <code class="text-[#1b1b18] dark:text-[#EDEDEC]">jev-1.14.0</code>. Images need <code class="text-[#1b1b18] dark:text-[#EDEDEC]">TypeSafe-Danger-Zone-Images: true</code>. A longer context needs <code class="text-[#1b1b18] dark:text-[#EDEDEC]">TypeSafe-Danger-Zone-Long-Context: true</code>.</p>
                 </li>
                 <li>
                     <a href="https://openrouter.ai/docs/guides/community/jev" class="font-medium text-[#1b1b18] underline dark:text-[#EDEDEC]">Jev on OpenRouter</a>

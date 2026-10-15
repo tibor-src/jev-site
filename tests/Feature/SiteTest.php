@@ -26,7 +26,7 @@ class SiteTest extends TestCase
                 'jev.faqs',
                 'https://jev.tibor.io/faqs',
                 'FAQs — Jev - A Decision Model',
-                'Answers about Jev: what a decision model returns, how Noul, Choice, and Score differ, and how this site runs.',
+                'Answers about Jev: what a decision model returns, how Noul, Choice, Score, and Box differ, and how this site runs.',
                 'FAQPage',
                 'website',
                 'A Noul answer has no separate confidence field.',
@@ -139,7 +139,7 @@ class SiteTest extends TestCase
         $about = collect($this->structuredData($html)['@graph'])->firstWhere('@type', 'AboutPage');
 
         $this->assertSame(
-            ['Noul', 'Choice', 'Score'],
+            ['Noul', 'Choice', 'Score', 'Box'],
             array_column($about['mainEntity']['hasDefinedTerm'], 'name'),
         );
 
@@ -161,16 +161,20 @@ class SiteTest extends TestCase
         $this->assertSame('ItemList', $list['@type']);
         $this->assertSame([
             'https://typesafe.ai/blog/introducing-system-one-models-and-jev',
+            'https://typesafe.ai/blog/jev-1-14',
             'https://docs.typesafe.ai/introduction',
             'https://docs.typesafe.ai/concepts/system-one',
             'https://docs.typesafe.ai/primitives',
             'https://docs.typesafe.ai/primitives/noul',
             'https://docs.typesafe.ai/primitives/choice',
             'https://docs.typesafe.ai/primitives/score',
+            'https://docs.typesafe.ai/primitives/box',
             'https://docs.typesafe.ai/confidence',
             'https://docs.typesafe.ai/concepts/state',
+            'https://docs.typesafe.ai/images',
             'https://docs.typesafe.ai/concepts/how-to-build-with-system-one',
             'https://docs.typesafe.ai/model-jaggedness/jev-1.13',
+            'https://docs.typesafe.ai/models',
             'https://docs.typesafe.ai/patterns/fan-out',
             'https://docs.typesafe.ai/patterns/confidence-routing',
             'https://docs.typesafe.ai/patterns/composite-scoring',
@@ -246,6 +250,46 @@ class SiteTest extends TestCase
         $response->assertSee('](https://jev.tibor.io/lore)', false);
         $response->assertSee('#what-does-jev-return', false);
         $response->assertSee('https://typesafe.ai/blog/introducing-system-one-models-and-jev', false);
+        $response->assertSee('https://typesafe.ai/blog/jev-1-14', false);
+        $response->assertSee('TypeSafe-Danger-Zone-Images: true', false);
+        $response->assertSee('262k', false);
+    }
+
+    public function test_pages_include_the_jev_1_14_release_facts(): void
+    {
+        $faqs = $this->get(route('jev.faqs'));
+        $what = $this->get(route('jev.what'));
+        $resources = $this->get(route('jev.resources'));
+
+        $faqs->assertSee('id="what-is-a-box"', false);
+        $faqs->assertSee('id="how-long-can-a-request-be"', false);
+        $faqs->assertSee('id="which-model-id"', false);
+        $faqs->assertSee('TypeSafe-Danger-Zone-Images: true', false);
+        $faqs->assertSee('TypeSafe-Danger-Zone-Long-Context: true', false);
+        $faqs->assertSee('jev-1.14.0', false);
+        $faqs->assertSee('jev-preview', false);
+        $faqs->assertSee('top, bottom, left, and right', false);
+        $faqs->assertSee('64k', false);
+        $faqs->assertSee('32k', false);
+        $faqs->assertSee('262k', false);
+        $faqs->assertSee('$42 per Btok', false);
+        $faqs->assertSee('$0.042 per Mtok', false);
+        $faqs->assertSee('Audio and video are still not accepted', false);
+        $faqs->assertDontSee('Images, audio, and video are not supported yet', false);
+        $faqs->assertSee('datetime="2026-10-14"', false);
+
+        $what->assertSee('Where is it in the image?', false);
+        $what->assertSee('TypeSafe-Danger-Zone-Images: true', false);
+        $what->assertSee('TypeSafe-Danger-Zone-Long-Context: true', false);
+        $what->assertSee('datetime="2026-10-14"', false);
+
+        $resources->assertSee('https://docs.typesafe.ai/images', false);
+        $resources->assertSee('https://docs.typesafe.ai/primitives/box', false);
+        $resources->assertSee('https://docs.typesafe.ai/models', false);
+        $resources->assertSee('64k tokens per request', false);
+        $resources->assertSee('32k per question', false);
+        $resources->assertSee('262k', false);
+        $resources->assertDontSee('No images yet', false);
     }
 
     public function test_robots_allows_crawlers_and_points_at_the_sitemap(): void

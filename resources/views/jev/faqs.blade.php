@@ -10,7 +10,7 @@
         <header class="flex flex-col gap-2">
             <h2 class="text-xl font-medium tracking-tight">FAQs</h2>
             <p class="text-[#706f6c] dark:text-[#A1A09A]">
-                Short answers for the questions this site raises. The model is TypeSafe’s. The pages are an independent reading of their docs and the <time datetime="2026-09-15">15 September 2026</time> launch post.
+                Short answers for the questions this site raises. The model is TypeSafe’s. The pages are an independent reading of their docs, the <time datetime="2026-09-15">15 September 2026</time> launch post, and the <time datetime="2026-10-14">14 October 2026</time> Jev 1.14 post.
             </p>
         </header>
 
